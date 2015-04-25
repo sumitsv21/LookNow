@@ -7,9 +7,9 @@ class HomeController < ApplicationController
 		@polygon = []
 		boundaries = []
 		JSON.parse(Property.last.boundary).each do |n|
-			boundaries << { :lat => n.first, :lng => n.last }
+			boundaries << [ n.first, n.last ]
 		end
-		@polygon = [boundaries]
+		@polygon = boundaries
 	end
 	
 end

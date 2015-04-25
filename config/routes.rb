@@ -47,7 +47,11 @@ LookNow::Application.routes.draw do
   #     resource :seller
   #   end
 
-  resources :property_infos
+  resources :property_infos, only: [:create] do
+    collection do
+      get 'get_feed'
+    end
+  end
 
   # Example resource route with more complex sub-resources:
   #   resources :products do

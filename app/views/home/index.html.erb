@@ -37,10 +37,10 @@
   </div>
 
 <script type="text/javascript">
-  buildMap([{"lat":12.93622319969078,"lng":77.60541558265686, "infowindow": 'Hello' }])
+  //buildMap([{"lat":12.93622319969078,"lng":77.60541558265686, "infowindow": 'Hello' }])
 </script>
 <script type="text/javascript">
-  var handler = Gmaps.build('Google');
+/*  var handler = Gmaps.build('Google');
      handler.buildMap({ internal: {id: 'map'}}, function(){
      var polygons = handler.addPolygons(<%= @polygon.to_json.html_safe %>,
         {
@@ -53,10 +53,55 @@
      handler.bounds.extendWith(polygons);
      handler.fitMapToBounds();
      handler.getMap().setZoom(18);
-   });
+  });
+*/
+ MarkerData = [12.93533315169078, 77.60511558261397, "Elsie Roy Elementary"];
+ PathData = <%= @polygon %>;
+function initialize() {
+     map = 
+        new google.maps.Map(document.getElementById('map'));
+     infowindow = new google.maps.InfoWindow();
+     center = 
+        new google.maps.LatLng(MarkerData[0], MarkerData[1]);
+     marker = new google.maps.Marker({
+        position: center,
+        map: map,
+        title: MarkerData[2]
+    });
+ 
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(this.title);
+        infowindow.open(map, this);
+    });
+ 
+    var path = [];
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(center);
+    for (var i in PathData)
+    {
+        var p = PathData[i];
+        var latlng = new google.maps.LatLng(p[0], p[1]);
+        path.push(latlng);
+        bounds.extend(latlng);
+    }
+    var poly = new google.maps.Polygon({
+        paths: path,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 3,
+        fillColor: '#FF0000',
+        fillOpacity: 0.1
+    });
+    poly.setMap(map);
+     
+     
+    map.fitBounds(bounds);
+}
+ 
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
-<script>
+<script type="text/javascript">
   $('.info_name').change(function(){
     var tweet = ""; 
     if ($(this).val() == 'price') {
@@ -100,8 +145,26 @@
     }
     $("#tweet").val(tweet);
   }
+
+  function push_the_tweet(tweet){
+    $('div#tweets').append(tweet);
+  }
+
+  function get_feed(){
+    setTimeout(function() {
+      $.ajax({
+        url: '<%= get_feed_property_infos_path %>',
+        method: 'GET',
+        success: get_feed(),
+        type: 'JS'
+      });
+    }, 5000);
+  }
+
   initialize_event_for_price();
   initialize_event_for_infra();
   generate_tweet($('.info_name') == "price");
+  get_feed();
+
 </script>
 	
