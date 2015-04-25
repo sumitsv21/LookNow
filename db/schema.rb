@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150425110800) do
+ActiveRecord::Schema.define(version: 20150425125317) do
 
   create_table "attribute_histories", force: :cascade do |t|
     t.string   "entity",         limit: 50,   null: false
@@ -78,9 +78,8 @@ ActiveRecord::Schema.define(version: 20150425110800) do
 
   create_table "property_infos", force: :cascade do |t|
     t.integer  "property_id", limit: 8,     null: false
-    t.string   "type",        limit: 255
     t.string   "name",        limit: 255
-    t.string   "value",       limit: 255
+    t.string   "details",     limit: 255
     t.string   "source",      limit: 255
     t.text     "comments",    limit: 65535
     t.datetime "created_at",                null: false

@@ -42,6 +42,8 @@ LookNow::Application.routes.draw do
   #     resource :seller
   #   end
 
+  resources :property_infos
+
   # Example resource route with more complex sub-resources:
   #   resources :products do
   #     resources :comments

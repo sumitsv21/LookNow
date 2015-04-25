@@ -1,1 +1,44 @@
+<div class="container">
+  <div class="row" style="min-height: 500px; border: 1px solid">
+    <div class="col-md-8">
+      Map
+    </div>
+    <div class="col-md-4">
+      Tweet
+    </div>
+  </div>
+  <div class="clear"></div>
+
+  <div class="row"  style="min-height: 100px; border: 1px solid">
+    <div class="col-md-12">
+
+      <%= form_tag property_infos_path, method: :post, remote: true do %>
+        <%= select_tag :name, options_for_select(['price', 'dispute', 'infra', 'nature']),  class: "info_name"%>
+
+          <%= text_field_tag :new_price, nil, :placeholder => 'new price', class: "info_name_price_options", style: "display: none" %>
+          <%= text_field_tag :price_change_reason, nil, :placeholder => 'Reason' , class: "info_name_price_options", style: "display: none"  %>
+
+          <%= select_tag :new_infra, options_for_select(['school', 'hospital', 'highway', 'tech_park']), class: "info_name_infra_options", style: "display: none"  %>
+          <%= text_field_tag :new_date, nil, :placeholder => 'By When', class: "info_name_infra_options", style: "display: none" %>
+
+          <%= text_area_tag :comments, nil, :placeholder => 'Tweet !!!' %>
+      <%end%>
+    </div>
+  </div>
+
+</div>
+
+<script>
+    $('.info_name').change(function(){
+        if ($(this).value == 'price'){
+            $('.info_name_price_options').show()
+            $('.info_name_infra_options').hide()
+        }
+        else if ($(this).value == 'infra'){
+            $('.info_name_price_options').hide()
+            $('.info_name_infra_options').show()
+        }
+
+    })
+</script>
 Hello <%= link_to 'Logout', destroy_user_session_path, :method => 'delete' %>
