@@ -7,7 +7,7 @@ module HomeHelper
     TWITTER_CLIENT.update(str)
   end
 
-  def get_live_tweets(topics = ['housing', 'land', 'plot', 'property', 'real estate'])
+  def get_live_tweets(topics = ['housing', 'land', 'plot', 'bangalore'])
     a = []
     TWITTER_STREAM_CLIENT.filter(:track => topics.join(",")) do |object|
       a << object if object.is_a?(Twitter::Tweet)

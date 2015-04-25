@@ -16,7 +16,7 @@ class PropertyInfosController < ApplicationController
   end
 
   def get_feed
-    @tweets = get_live_tweets #returns an object. Run a loop and call .text on each to get the tweet. user.profile_image_url_https gives image
+    @tweets = get_live_tweets
     render 'get_feed.js'
   end
 
