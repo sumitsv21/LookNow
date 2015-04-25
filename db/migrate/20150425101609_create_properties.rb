@@ -2,12 +2,12 @@ class CreateProperties < ActiveRecord::Migration
   def change
     create_table :properties do |t|
       t.string :status
-      t.integer :user_id, :bigint, :null => false
-      t.integer :listed_by, :bigint, :null => false
+      t.integer :user_id, :null => false
+      t.integer :listed_by, :null => false
       t.float :latitude
       t.float :longitude
       t.text :boundary
-      t.string :typee
+      t.string :property_type
       t.string :sub_type
       t.string :landmark
 

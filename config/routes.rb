@@ -7,6 +7,11 @@ LookNow::Application.routes.draw do
   get '/auth/:provider/callback' => 'authentications#create'
   get '/auth/failure', to: redirect('/')
   resources :authentications
+  resources :properties do
+    member do
+      post 'create_property'
+    end
+  end
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
