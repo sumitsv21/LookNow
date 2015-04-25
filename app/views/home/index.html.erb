@@ -13,10 +13,10 @@
     <div class="col-md-12">
 
       <%= form_tag property_infos_path, method: :post, remote: true do %>
-        <%= select_tag :name, options_for_select(['price', 'dispute', 'infra', 'nature']),  class: "info_name"%>
+        <%= select_tag :name, options_for_select([['Price', 'price'], ['Dispute', 'dispute'], ['Infra', 'infra'], ['Nature', 'nature']]),  class: "info_name"%>
 
-          <%= text_field_tag :new_price, nil, :placeholder => 'new price', class: "info_name_price_options", style: "display: none" %>
-          <%= text_field_tag :price_change_reason, nil, :placeholder => 'Reason' , class: "info_name_price_options", style: "display: none"  %>
+          <%= text_field_tag :new_price, nil, :placeholder => 'new price', class: "info_name_price_options" %>
+          <%= text_field_tag :price_change_reason, nil, :placeholder => 'Reason' , class: "info_name_price_options" %>
 
           <%= select_tag :new_infra, options_for_select(['school', 'hospital', 'highway', 'tech_park']), class: "info_name_infra_options", style: "display: none"  %>
           <%= text_field_tag :new_date, nil, :placeholder => 'By When', class: "info_name_infra_options", style: "display: none" %>
@@ -30,11 +30,11 @@
 
 <script>
     $('.info_name').change(function(){
-        if ($(this).value == 'price'){
+        if ($(this).val() == 'price'){
             $('.info_name_price_options').show()
             $('.info_name_infra_options').hide()
         }
-        else if ($(this).value == 'infra'){
+        else if ($(this).val() == 'infra'){
             $('.info_name_price_options').hide()
             $('.info_name_infra_options').show()
         }
