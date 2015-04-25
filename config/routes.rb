@@ -1,4 +1,8 @@
-Rails.application.routes.draw do
+LookNow::Application.routes.draw do
+
+  devise_for :users, :controllers => { :sessions => "sessions", :registrations => "registration" } do
+    get 'users/sign_out' => 'sessions#destroy', :via => :delete
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -14,6 +18,7 @@ Rails.application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
+ root to: "home#index"
   # Example resource route with options:
   #   resources :products do
   #     member do
