@@ -96,6 +96,13 @@ Devise.setup do |config|
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
   config.stretches = Rails.env.test? ? 1 : 10
 
+  require "omniauth-twitter"
+  config.omniauth :twitter, 'slmLB86di1vEn5zl2bbMt4BiG', 'hdKSRVrcguXVkaUbnKC0nlh0QKvaTv21RUdcgsC5d6quvwYBOo', {:image_size => 'original'}
+
+  OmniAuth.config.on_failure = Proc.new { |env|
+    OmniAuth::FailureEndpoint.new(env).redirect_to_failure
+  }
+
   # Setup a pepper to generate the encrypted password.
   # config.pepper = 'ad81189964bbc9c9182dd3352add71567576c32e3b5f632e7c30e287cfd5893ae6c11aadd0c18e6ee1ce9346ec27efbf98b1402550ad64401f1150e513089dd7'
 
@@ -140,7 +147,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 8..128
+  config.password_length = 6..16
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly

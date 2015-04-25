@@ -1,8 +1,13 @@
 LookNow::Application.routes.draw do
 
-  devise_for :users, :controllers => { :sessions => "sessions", :registrations => "registration" } do
+  devise_for :users, :controllers => { :sessions => "sessions", :registrations => "registration", :omniauth_callbacks => "authentications" } do
     get 'users/sign_out' => 'sessions#destroy', :via => :delete
   end
+
+  get '/auth/:provider/callback' => 'authentications#create'
+  get '/auth/failure', to: redirect('/')
+  resources :authentications
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

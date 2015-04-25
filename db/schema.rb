@@ -29,6 +29,17 @@ ActiveRecord::Schema.define(version: 20150425125317) do
   add_index "attribute_histories", ["created_at"], name: "index_attribute_histories_on_created_at", using: :btree
   add_index "attribute_histories", ["entity_id"], name: "index_attribute_histories_on_entity_id", using: :btree
 
+  create_table "authentications", force: :cascade do |t|
+    t.integer  "user_id",      limit: 4
+    t.string   "provider",     limit: 255
+    t.string   "uid",          limit: 255
+    t.string   "image",        limit: 255
+    t.text     "token",        limit: 65535
+    t.text     "token_secret", limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
   create_table "properties", force: :cascade do |t|
     t.string   "status",     limit: 255
     t.integer  "user_id",    limit: 8,     null: false

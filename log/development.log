@@ -918,6 +918,7 @@ Completed 200 OK in 109ms (Views: 105.2ms | ActiveRecord: 0.6ms)
   [1m[35mProperty Load (0.6ms)[0m  SELECT `properties`.* FROM `properties` JOIN taggings properties_taggings_4bd8edd  ON properties_taggings_4bd8edd.taggable_id = properties.id AND properties_taggings_4bd8edd.taggable_type = 'Property' AND properties_taggings_4bd8edd.tag_id = 1
   [1m[36mActsAsTaggableOn::Tag Load (0.4ms)[0m  [1mSELECT `tags`.* FROM `tags` WHERE (LOWER(name) = LOWER('hot1'))[0m
   [1m[35mProperty Load (0.2ms)[0m  SELECT `properties`.* FROM `properties` WHERE (1 = 0)
+<<<<<<< HEAD
   [1m[36m (34.2ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
   [1m[35m (38.4ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
   [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
@@ -1024,6 +1025,68 @@ Migrating to PopulateSeedDataForPropertyInfos (20150425125317)
   [1m[35m (0.3ms)[0m  BEGIN
   [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425125317')[0m
   [1m[35m (0.4ms)[0m  COMMIT
+=======
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to CreateProperties (20150425101609)
+  [1m[35m (137.1ms)[0m  CREATE TABLE `properties` (`id` int(11) auto_increment PRIMARY KEY, `status` varchar(255), `user_id` bigint NOT NULL, `latitude` float, `longitude` float, `boundary` text, `typee` varchar(255), `sub_type` varchar(255), `landmark` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425101609')
+  [1m[36m (59.6ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePropertyDetails (20150425102846)
+  [1m[35m (189.9ms)[0m  CREATE TABLE `property_details` (`id` int(11) auto_increment PRIMARY KEY, `property_id` bigint NOT NULL, `name` varchar(255), `value` varchar(255), `comments` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (24.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425102846')
+  [1m[36m (52.1ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePropertyDetailHistories (20150425103019)
+  [1m[35m (122.4ms)[0m  CREATE TABLE `property_detail_histories` (`id` int(11) auto_increment PRIMARY KEY, `property_detail_id` bigint NOT NULL, `from` varchar(20), `to` varchar(20) NOT NULL, `event` varchar(50), `user_id` varchar(20), `change_reason` varchar(50), `change_sub_reason` varchar(50), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425103019')
+  [1m[36m (40.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePropertyInfos (20150425103549)
+  [1m[35m (133.0ms)[0m  CREATE TABLE `property_infos` (`id` int(11) auto_increment PRIMARY KEY, `property_id` bigint NOT NULL, `type` varchar(255), `name` varchar(255), `value` varchar(255), `source` varchar(255), `comments` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425103549')
+  [1m[36m (31.6ms)[0m  [1mCOMMIT[0m
+Migrating to ActsAsTaggableOnMigration (20150425105615)
+  [1m[35m (166.5ms)[0m  CREATE TABLE `tags` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB
+  [1m[36m (133.8ms)[0m  [1mCREATE TABLE `taggings` (`id` int(11) auto_increment PRIMARY KEY, `tag_id` int(11), `taggable_id` int(11), `taggable_type` varchar(255), `tagger_id` int(11), `tagger_type` varchar(255), `context` varchar(128), `created_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (227.1ms)[0m  CREATE  INDEX `index_taggings_on_tag_id`  ON `taggings` (`tag_id`) 
+  [1m[36m (188.5ms)[0m  [1mCREATE  INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context`  ON `taggings` (`taggable_id`, `taggable_type`, `context`) [0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105615')[0m
+  [1m[35m (29.7ms)[0m  COMMIT
+Migrating to AddMissingUniqueIndices (20150425105616)
+  [1m[36m (169.6ms)[0m  [1mCREATE UNIQUE INDEX `index_tags_on_name`  ON `tags` (`name`) [0m
+  [1m[35m (177.6ms)[0m  DROP INDEX `index_taggings_on_tag_id` ON `taggings`
+  [1m[36m (209.0ms)[0m  [1mDROP INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context` ON `taggings`[0m
+  [1m[35m (260.7ms)[0m  CREATE UNIQUE INDEX `taggings_idx`  ON `taggings` (`tag_id`, `taggable_id`, `taggable_type`, `context`, `tagger_id`, `tagger_type`) 
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425105616')
+  [1m[36m (31.9ms)[0m  [1mCOMMIT[0m
+Migrating to AddTaggingsCounterCacheToTags (20150425105617)
+  [1m[35m (256.9ms)[0m  ALTER TABLE `tags` ADD `taggings_count` int(11) DEFAULT 0
+  [1m[36mActsAsTaggableOn::Tag Load (0.4ms)[0m  [1mSELECT  `tags`.* FROM `tags`  ORDER BY `tags`.`id` ASC LIMIT 1000[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105617')[0m
+  [1m[35m (41.7ms)[0m  COMMIT
+Migrating to AddMissingTaggableIndex (20150425105618)
+  [1m[36m (211.5ms)[0m  [1mCREATE  INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context`  ON `taggings` (`taggable_id`, `taggable_type`, `context`) [0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (21.8ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105618')[0m
+  [1m[35m (54.3ms)[0m  COMMIT
+Migrating to ChangeCollationForTagNames (20150425105619)
+  [1m[36m (278.9ms)[0m  [1mALTER TABLE tags MODIFY name varchar(255) CHARACTER SET utf8 COLLATE utf8_bin;[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105619')[0m
+  [1m[35m (31.4ms)[0m  COMMIT
+Migrating to CreateAttributeHistories (20150425110800)
+  [1m[36m (128.4ms)[0m  [1mCREATE TABLE `attribute_histories` (`id` int(11) auto_increment PRIMARY KEY, `entity` varchar(50) NOT NULL, `entity_id` bigint NOT NULL, `attribute_name` varchar(100) NOT NULL, `from_value` varchar(1024), `to_value` varchar(1024), `user_id` varchar(100), `reason` varchar(100), `comments` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (206.3ms)[0m  CREATE  INDEX `index_attribute_histories_on_entity_id`  ON `attribute_histories` (`entity_id`) 
+  [1m[36m (198.5ms)[0m  [1mCREATE  INDEX `index_attribute_histories_on_created_at`  ON `attribute_histories` (`created_at`) [0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425110800')[0m
+  [1m[35m (43.1ms)[0m  COMMIT
+>>>>>>> 517feaeb1366d63ec38dc16026e017d8004e4048
   [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
   [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
       ,fk.referenced_column_name as 'primary_key'
@@ -1035,6 +1098,7 @@ WHERE fk.referenced_column_name is not null
   AND fk.table_name = 'attribute_histories'
 
   [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `attribute_histories`[0m
+<<<<<<< HEAD
   [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
       ,fk.referenced_column_name as 'primary_key'
       ,fk.column_name as 'column'
@@ -1212,6 +1276,8 @@ Migrating to PopulateSeedDataForPropertyInfos (20150425125317)
   [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425125317')[0m
   [1m[35m (2.8ms)[0m  COMMIT
   [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+=======
+>>>>>>> 517feaeb1366d63ec38dc16026e017d8004e4048
   [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
       ,fk.referenced_column_name as 'primary_key'
       ,fk.column_name as 'column'
@@ -1219,9 +1285,15 @@ Migrating to PopulateSeedDataForPropertyInfos (20150425125317)
 FROM information_schema.key_column_usage fk
 WHERE fk.referenced_column_name is not null
   AND fk.table_schema = 'looknow_development'
+<<<<<<< HEAD
   AND fk.table_name = 'attribute_histories'
 
   [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `attribute_histories`[0m
+=======
+  AND fk.table_name = 'authentications'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `authentications`[0m
+>>>>>>> 517feaeb1366d63ec38dc16026e017d8004e4048
   [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
       ,fk.referenced_column_name as 'primary_key'
       ,fk.column_name as 'column'
@@ -1231,8 +1303,13 @@ WHERE fk.referenced_column_name is not null
   AND fk.table_schema = 'looknow_development'
   AND fk.table_name = 'properties'
 
+<<<<<<< HEAD
   [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `properties`[0m
   [1m[35m (0.5ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+=======
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `properties`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+>>>>>>> 517feaeb1366d63ec38dc16026e017d8004e4048
       ,fk.referenced_column_name as 'primary_key'
       ,fk.column_name as 'column'
       ,fk.constraint_name as 'name'
@@ -1241,8 +1318,13 @@ WHERE fk.referenced_column_name is not null
   AND fk.table_schema = 'looknow_development'
   AND fk.table_name = 'property_detail_histories'
 
+<<<<<<< HEAD
   [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `property_detail_histories`[0m
   [1m[35m (0.6ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+=======
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `property_detail_histories`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+>>>>>>> 517feaeb1366d63ec38dc16026e017d8004e4048
       ,fk.referenced_column_name as 'primary_key'
       ,fk.column_name as 'column'
       ,fk.constraint_name as 'name'
@@ -1251,8 +1333,13 @@ WHERE fk.referenced_column_name is not null
   AND fk.table_schema = 'looknow_development'
   AND fk.table_name = 'property_details'
 
+<<<<<<< HEAD
   [1m[36m (0.5ms)[0m  [1mSHOW CREATE TABLE `property_details`[0m
   [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+=======
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `property_details`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+>>>>>>> 517feaeb1366d63ec38dc16026e017d8004e4048
       ,fk.referenced_column_name as 'primary_key'
       ,fk.column_name as 'column'
       ,fk.constraint_name as 'name'
@@ -1271,8 +1358,13 @@ WHERE fk.referenced_column_name is not null
   AND fk.table_schema = 'looknow_development'
   AND fk.table_name = 'taggings'
 
+<<<<<<< HEAD
   [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `taggings`[0m
   [1m[35m (1.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+=======
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `taggings`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+>>>>>>> 517feaeb1366d63ec38dc16026e017d8004e4048
       ,fk.referenced_column_name as 'primary_key'
       ,fk.column_name as 'column'
       ,fk.constraint_name as 'name'
@@ -1281,8 +1373,13 @@ WHERE fk.referenced_column_name is not null
   AND fk.table_schema = 'looknow_development'
   AND fk.table_name = 'tags'
 
+<<<<<<< HEAD
   [1m[36m (1.1ms)[0m  [1mSHOW CREATE TABLE `tags`[0m
   [1m[35m (0.6ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+=======
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `tags`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+>>>>>>> 517feaeb1366d63ec38dc16026e017d8004e4048
       ,fk.referenced_column_name as 'primary_key'
       ,fk.column_name as 'column'
       ,fk.constraint_name as 'name'
@@ -1291,6 +1388,7 @@ WHERE fk.referenced_column_name is not null
   AND fk.table_schema = 'looknow_development'
   AND fk.table_name = 'users'
 
+<<<<<<< HEAD
   [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `users`[0m
 
 
@@ -3429,3 +3527,6 @@ Started GET "/assets/registration.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f
 
 
 Started GET "/assets/application.self-f98a0dd27ad1c55b2b9cfe97296d4887e5d4a4535b3bbbf9130c1050771738b2.js?body=1" for ::1 at 2015-04-25 19:33:39 +0530
+=======
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `users`[0m
+>>>>>>> 517feaeb1366d63ec38dc16026e017d8004e4048
