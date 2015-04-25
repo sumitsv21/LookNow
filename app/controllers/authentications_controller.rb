@@ -11,10 +11,10 @@ class AuthenticationsController < ApplicationController
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
       sign_in authentication.user
-      redirect_to root_path && return
+      redirect_to root_path
     elsif current_user
       current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
-      redirect_to '/' && return
+      redirect_to root_path
     else
       user = User.new
       user.apply_omniauth(omniauth)
