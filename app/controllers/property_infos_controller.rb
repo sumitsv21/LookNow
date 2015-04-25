@@ -10,4 +10,9 @@ class PropertyInfosController < ApplicationController
       format.js
     end
   end
+
+  def get_feed
+    @tweets = []
+    render 'get_feed.js'
+  end
 end

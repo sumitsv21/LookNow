@@ -6,6 +6,7 @@ class CreatePropertyInfos < ActiveRecord::Migration
       t.string :details
       t.string :source
       t.text :comments
+      t.integer :rating
       t.timestamps null: false
     end
   end
