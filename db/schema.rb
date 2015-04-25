@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150425125317) do
+ActiveRecord::Schema.define(version: 20150425155517) do
 
   create_table "attribute_histories", force: :cascade do |t|
     t.string   "entity",         limit: 50,   null: false
@@ -41,16 +41,17 @@ ActiveRecord::Schema.define(version: 20150425125317) do
   end
 
   create_table "properties", force: :cascade do |t|
-    t.string   "status",     limit: 255
-    t.integer  "user_id",    limit: 8,     null: false
-    t.float    "latitude",   limit: 24
-    t.float    "longitude",  limit: 24
-    t.text     "boundary",   limit: 65535
-    t.string   "typee",      limit: 255
-    t.string   "sub_type",   limit: 255
-    t.string   "landmark",   limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "status",        limit: 255
+    t.integer  "user_id",       limit: 4,     null: false
+    t.integer  "listed_by",     limit: 4,     null: false
+    t.float    "latitude",      limit: 24
+    t.float    "longitude",     limit: 24
+    t.text     "boundary",      limit: 65535
+    t.string   "property_type", limit: 255
+    t.string   "sub_type",      limit: 255
+    t.string   "landmark",      limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "property_detail_histories", force: :cascade do |t|
