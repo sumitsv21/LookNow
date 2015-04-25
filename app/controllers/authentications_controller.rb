@@ -18,7 +18,6 @@ class AuthenticationsController < ApplicationController
     else
       user = User.new
       user.apply_omniauth(omniauth)
-      byebug
       if user.save
         sign_in_and_redirect(:user, user)
       else
