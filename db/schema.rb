@@ -42,7 +42,9 @@ ActiveRecord::Schema.define(version: 20150425110800) do
 
   create_table "properties", force: :cascade do |t|
     t.string   "status",     limit: 255
-    t.integer  "user_id",    limit: 8,     null: false
+    t.integer  "user_id",    limit: 4,     null: false
+    t.integer  "bigint",     limit: 4,     null: false
+    t.integer  "listed_by",  limit: 4,     null: false
     t.float    "latitude",   limit: 24
     t.float    "longitude",  limit: 24
     t.text     "boundary",   limit: 65535

@@ -27,6 +27,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'omniauth'
 gem 'omniauth-twitter'
 
+gem 'geocoder'
+gem 'gmaps4rails'
+
+
+
+
 gem 'twitter'
 
 
