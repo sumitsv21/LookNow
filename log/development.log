@@ -918,3 +918,377 @@ Completed 200 OK in 109ms (Views: 105.2ms | ActiveRecord: 0.6ms)
   [1m[35mProperty Load (0.6ms)[0m  SELECT `properties`.* FROM `properties` JOIN taggings properties_taggings_4bd8edd  ON properties_taggings_4bd8edd.taggable_id = properties.id AND properties_taggings_4bd8edd.taggable_type = 'Property' AND properties_taggings_4bd8edd.tag_id = 1
   [1m[36mActsAsTaggableOn::Tag Load (0.4ms)[0m  [1mSELECT `tags`.* FROM `tags` WHERE (LOWER(name) = LOWER('hot1'))[0m
   [1m[35mProperty Load (0.2ms)[0m  SELECT `properties`.* FROM `properties` WHERE (1 = 0)
+  [1m[36m (34.2ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (38.4ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to DeviseCreateUsers (20150425083704)
+DEPRECATION WARNING: `#timestamp` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from emit_warning_if_null_unspecified at /Users/praveen.sah/.rvm/gems/ruby-2.1.2@global/gems/activerecord-4.2.0/lib/active_record/connection_adapters/abstract/schema_definitions.rb:63)
+  [1m[35m (13.0ms)[0m  CREATE TABLE `users` (`id` int(11) auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (19.9ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_email`  ON `users` (`email`) [0m
+  [1m[35m (12.4ms)[0m  CREATE UNIQUE INDEX `index_users_on_reset_password_token`  ON `users` (`reset_password_token`) 
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425083704')
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+Migrating to AddNameToUser (20150425090541)
+  [1m[35m (31.1ms)[0m  ALTER TABLE `users` ADD `name` varchar(255)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425090541')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to CreateProperties (20150425101609)
+  [1m[35m (20.3ms)[0m  CREATE TABLE `properties` (`id` int(11) auto_increment PRIMARY KEY, `status` varchar(255), `user_id` bigint NOT NULL, `latitude` float, `longitude` float, `boundary` text, `typee` varchar(255), `sub_type` varchar(255), `landmark` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425101609')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePropertyDetails (20150425102846)
+  [1m[35m (19.2ms)[0m  CREATE TABLE `property_details` (`id` int(11) auto_increment PRIMARY KEY, `property_id` bigint NOT NULL, `name` varchar(255), `value` varchar(255), `comments` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425102846')
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePropertyDetailHistories (20150425103019)
+  [1m[35m (22.8ms)[0m  CREATE TABLE `property_detail_histories` (`id` int(11) auto_increment PRIMARY KEY, `property_detail_id` bigint NOT NULL, `from` varchar(20), `to` varchar(20) NOT NULL, `event` varchar(50), `user_id` varchar(20), `change_reason` varchar(50), `change_sub_reason` varchar(50), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425103019')
+  [1m[36m (1.5ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePropertyInfos (20150425103549)
+  [1m[35m (22.5ms)[0m  CREATE TABLE `property_infos` (`id` int(11) auto_increment PRIMARY KEY, `property_id` bigint NOT NULL, `name` varchar(255), `details` varchar(255), `source` varchar(255), `comments` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425103549')
+  [1m[36m (1.5ms)[0m  [1mCOMMIT[0m
+Migrating to ActsAsTaggableOnMigration (20150425105615)
+  [1m[35m (21.9ms)[0m  CREATE TABLE `tags` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB
+  [1m[36m (40.8ms)[0m  [1mCREATE TABLE `taggings` (`id` int(11) auto_increment PRIMARY KEY, `tag_id` int(11), `taggable_id` int(11), `taggable_type` varchar(255), `tagger_id` int(11), `tagger_type` varchar(255), `context` varchar(128), `created_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (58.1ms)[0m  CREATE  INDEX `index_taggings_on_tag_id`  ON `taggings` (`tag_id`) 
+  [1m[36m (39.9ms)[0m  [1mCREATE  INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context`  ON `taggings` (`taggable_id`, `taggable_type`, `context`) [0m
+  [1m[35m (0.7ms)[0m  BEGIN
+  [1m[36mSQL (1.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105615')[0m
+  [1m[35m (0.8ms)[0m  COMMIT
+Migrating to AddMissingUniqueIndices (20150425105616)
+  [1m[36m (31.8ms)[0m  [1mCREATE UNIQUE INDEX `index_tags_on_name`  ON `tags` (`name`) [0m
+  [1m[35m (17.5ms)[0m  DROP INDEX `index_taggings_on_tag_id` ON `taggings`
+  [1m[36m (17.4ms)[0m  [1mDROP INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context` ON `taggings`[0m
+  [1m[35m (16.2ms)[0m  CREATE UNIQUE INDEX `taggings_idx`  ON `taggings` (`tag_id`, `taggable_id`, `taggable_type`, `context`, `tagger_id`, `tagger_type`) 
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425105616')
+  [1m[36m (1.2ms)[0m  [1mCOMMIT[0m
+Migrating to AddTaggingsCounterCacheToTags (20150425105617)
+  [1m[35m (33.2ms)[0m  ALTER TABLE `tags` ADD `taggings_count` int(11) DEFAULT 0
+  [1m[36mActsAsTaggableOn::Tag Load (0.4ms)[0m  [1mSELECT  `tags`.* FROM `tags`  ORDER BY `tags`.`id` ASC LIMIT 1000[0m
+  [1m[35m (4.0ms)[0m  BEGIN
+  [1m[36mSQL (5.6ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105617')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddMissingTaggableIndex (20150425105618)
+  [1m[36m (28.3ms)[0m  [1mCREATE  INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context`  ON `taggings` (`taggable_id`, `taggable_type`, `context`) [0m
+  [1m[35m (1.9ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105618')[0m
+  [1m[35m (0.7ms)[0m  COMMIT
+Migrating to ChangeCollationForTagNames (20150425105619)
+  [1m[36m (43.0ms)[0m  [1mALTER TABLE tags MODIFY name varchar(255) CHARACTER SET utf8 COLLATE utf8_bin;[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105619')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateAttributeHistories (20150425110800)
+  [1m[36m (15.4ms)[0m  [1mCREATE TABLE `attribute_histories` (`id` int(11) auto_increment PRIMARY KEY, `entity` varchar(50) NOT NULL, `entity_id` bigint NOT NULL, `attribute_name` varchar(100) NOT NULL, `from_value` varchar(1024), `to_value` varchar(1024), `user_id` varchar(100), `reason` varchar(100), `comments` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (16.2ms)[0m  CREATE  INDEX `index_attribute_histories_on_entity_id`  ON `attribute_histories` (`entity_id`) 
+  [1m[36m (20.7ms)[0m  [1mCREATE  INDEX `index_attribute_histories_on_created_at`  ON `attribute_histories` (`created_at`) [0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425110800')[0m
+  [1m[35m (1.3ms)[0m  COMMIT
+Migrating to PopulateSeedDataForPropertyInfos (20150425125317)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO `property_infos` (`property_id`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'price', '{\"from_price\":1000,\"to_price\":1100,\"delta_price\":100}', 'price increased', '2015-04-25 13:04:26.386372', '2015-04-25 13:04:26.386372')
+  [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `property_infos` (`property_id`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'dispute', '{\"type\":\"local\"}', 'two got killed', '2015-04-25 13:04:26.392045', '2015-04-25 13:04:26.392045')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO `property_infos` (`property_id`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'infra', '{\"type\":\"college\",\"date_delta\":\"1 year\"}', 'two got killed', '2015-04-25 13:04:26.396837', '2015-04-25 13:04:26.396837')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `property_infos` (`property_id`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'nature', '{\"type\":\"water_table\",\"value\":\"high\"}', 'Water level high or low', '2015-04-25 13:04:26.400696', '2015-04-25 13:04:26.400696')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `property_infos` (`property_id`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'nature', '{\"type\":\"earth_quake\",\"value\":true}', 'Earthquake prone', '2015-04-25 13:04:26.404290', '2015-04-25 13:04:26.404290')
+  [1m[36m (1.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (1.5ms)[0m  [1mINSERT INTO `property_infos` (`property_id`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (2, 'price', '{\"from_price\":1000,\"to_price\":1100,\"delta_price\":100}', 'price increased', '2015-04-25 13:04:26.420905', '2015-04-25 13:04:26.420905')[0m
+  [1m[35m (0.7ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  INSERT INTO `property_infos` (`property_id`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (2, 'dispute', '{\"type\":\"government\"}', 'Oil land', '2015-04-25 13:04:26.426479', '2015-04-25 13:04:26.426479')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.8ms)[0m  [1mINSERT INTO `property_infos` (`property_id`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (2, 'infra', '{\"type\":\"Hospital\",\"date_delta\":\"2 years\"}', 'Close to city', '2015-04-25 13:04:26.430706', '2015-04-25 13:04:26.430706')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO `property_infos` (`property_id`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (2, 'nature', '{\"type\":\"water_table\",\"value\":\"low\"}', 'Water level high or low', '2015-04-25 13:04:26.436396', '2015-04-25 13:04:26.436396')
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425125317')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'attribute_histories'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `attribute_histories`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'properties'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `properties`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'property_detail_histories'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `property_detail_histories`[0m
+  [1m[35m (0.7ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'property_details'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `property_details`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'property_infos'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `property_infos`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'taggings'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `taggings`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'tags'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `tags`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'users'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `users`[0m
+  [1m[36m (18.7ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (26.2ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to DeviseCreateUsers (20150425083704)
+DEPRECATION WARNING: `#timestamp` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from emit_warning_if_null_unspecified at /Users/praveen.sah/.rvm/gems/ruby-2.1.2@global/gems/activerecord-4.2.0/lib/active_record/connection_adapters/abstract/schema_definitions.rb:63)
+  [1m[35m (16.3ms)[0m  CREATE TABLE `users` (`id` int(11) auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (15.0ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_email`  ON `users` (`email`) [0m
+  [1m[35m (13.2ms)[0m  CREATE UNIQUE INDEX `index_users_on_reset_password_token`  ON `users` (`reset_password_token`) 
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425083704')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddNameToUser (20150425090541)
+  [1m[35m (27.1ms)[0m  ALTER TABLE `users` ADD `name` varchar(255)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425090541')
+  [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+Migrating to CreateProperties (20150425101609)
+  [1m[35m (16.4ms)[0m  CREATE TABLE `properties` (`id` int(11) auto_increment PRIMARY KEY, `status` varchar(255), `user_id` bigint NOT NULL, `latitude` float, `longitude` float, `boundary` text, `typee` varchar(255), `sub_type` varchar(255), `landmark` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425101609')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePropertyDetails (20150425102846)
+  [1m[35m (15.4ms)[0m  CREATE TABLE `property_details` (`id` int(11) auto_increment PRIMARY KEY, `property_id` bigint NOT NULL, `name` varchar(255), `value` varchar(255), `comments` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425102846')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePropertyDetailHistories (20150425103019)
+  [1m[35m (14.0ms)[0m  CREATE TABLE `property_detail_histories` (`id` int(11) auto_increment PRIMARY KEY, `property_detail_id` bigint NOT NULL, `from` varchar(20), `to` varchar(20) NOT NULL, `event` varchar(50), `user_id` varchar(20), `change_reason` varchar(50), `change_sub_reason` varchar(50), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425103019')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePropertyInfos (20150425103549)
+  [1m[35m (12.5ms)[0m  CREATE TABLE `property_infos` (`id` int(11) auto_increment PRIMARY KEY, `property_id` bigint NOT NULL, `name` varchar(255), `details` varchar(255), `source` varchar(255), `comments` text, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425103549')
+  [1m[36m (1.9ms)[0m  [1mCOMMIT[0m
+Migrating to ActsAsTaggableOnMigration (20150425105615)
+  [1m[35m (12.3ms)[0m  CREATE TABLE `tags` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255)) ENGINE=InnoDB
+  [1m[36m (15.4ms)[0m  [1mCREATE TABLE `taggings` (`id` int(11) auto_increment PRIMARY KEY, `tag_id` int(11), `taggable_id` int(11), `taggable_type` varchar(255), `tagger_id` int(11), `tagger_type` varchar(255), `context` varchar(128), `created_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (19.4ms)[0m  CREATE  INDEX `index_taggings_on_tag_id`  ON `taggings` (`tag_id`) 
+  [1m[36m (18.9ms)[0m  [1mCREATE  INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context`  ON `taggings` (`taggable_id`, `taggable_type`, `context`) [0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105615')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddMissingUniqueIndices (20150425105616)
+  [1m[36m (16.2ms)[0m  [1mCREATE UNIQUE INDEX `index_tags_on_name`  ON `tags` (`name`) [0m
+  [1m[35m (13.3ms)[0m  DROP INDEX `index_taggings_on_tag_id` ON `taggings`
+  [1m[36m (11.1ms)[0m  [1mDROP INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context` ON `taggings`[0m
+  [1m[35m (16.2ms)[0m  CREATE UNIQUE INDEX `taggings_idx`  ON `taggings` (`tag_id`, `taggable_id`, `taggable_type`, `context`, `tagger_id`, `tagger_type`) 
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150425105616')
+  [1m[36m (1.8ms)[0m  [1mCOMMIT[0m
+Migrating to AddTaggingsCounterCacheToTags (20150425105617)
+  [1m[35m (24.0ms)[0m  ALTER TABLE `tags` ADD `taggings_count` int(11) DEFAULT 0
+  [1m[36mActsAsTaggableOn::Tag Load (0.3ms)[0m  [1mSELECT  `tags`.* FROM `tags`  ORDER BY `tags`.`id` ASC LIMIT 1000[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105617')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddMissingTaggableIndex (20150425105618)
+  [1m[36m (19.6ms)[0m  [1mCREATE  INDEX `index_taggings_on_taggable_id_and_taggable_type_and_context`  ON `taggings` (`taggable_id`, `taggable_type`, `context`) [0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105618')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to ChangeCollationForTagNames (20150425105619)
+  [1m[36m (23.6ms)[0m  [1mALTER TABLE tags MODIFY name varchar(255) CHARACTER SET utf8 COLLATE utf8_bin;[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425105619')[0m
+  [1m[35m (0.9ms)[0m  COMMIT
+Migrating to CreateAttributeHistories (20150425110800)
+  [1m[36m (18.3ms)[0m  [1mCREATE TABLE `attribute_histories` (`id` int(11) auto_increment PRIMARY KEY, `entity` varchar(50) NOT NULL, `entity_id` bigint NOT NULL, `attribute_name` varchar(100) NOT NULL, `from_value` varchar(1024), `to_value` varchar(1024), `user_id` varchar(100), `reason` varchar(100), `comments` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (16.5ms)[0m  CREATE  INDEX `index_attribute_histories_on_entity_id`  ON `attribute_histories` (`entity_id`) 
+  [1m[36m (16.4ms)[0m  [1mCREATE  INDEX `index_attribute_histories_on_created_at`  ON `attribute_histories` (`created_at`) [0m
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425110800')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to PopulateSeedDataForPropertyInfos (20150425125317)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `property_infos` (`property_id`, `source`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'https://localhost:3000', 'price', '{\"from_price\":1000,\"to_price\":1100,\"delta_price\":100}', 'price increased', '2015-04-25 13:09:23.366989', '2015-04-25 13:09:23.366989')
+  [1m[36m (1.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `property_infos` (`property_id`, `source`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'https://localhost:3000', 'dispute', '{\"type\":\"local\"}', 'two got killed', '2015-04-25 13:09:23.371177', '2015-04-25 13:09:23.371177')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `property_infos` (`property_id`, `source`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'https://localhost:3000', 'infra', '{\"type\":\"college\",\"date_delta\":\"1 year\"}', 'two got killed', '2015-04-25 13:09:23.374148', '2015-04-25 13:09:23.374148')
+  [1m[36m (1.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO `property_infos` (`property_id`, `source`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'https://localhost:3000', 'nature', '{\"type\":\"water_table\",\"value\":\"high\"}', 'Water level high or low', '2015-04-25 13:09:23.379094', '2015-04-25 13:09:23.379094')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO `property_infos` (`property_id`, `source`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (1, 'https://localhost:3000', 'nature', '{\"type\":\"earth_quake\",\"value\":true}', 'Earthquake prone', '2015-04-25 13:09:23.383877', '2015-04-25 13:09:23.383877')
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO `property_infos` (`property_id`, `source`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (2, 'https://twitter.com', 'price', '{\"from_price\":1000,\"to_price\":1100,\"delta_price\":100}', 'price increased', '2015-04-25 13:09:23.388796', '2015-04-25 13:09:23.388796')[0m
+  [1m[35m (0.9ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (8.2ms)[0m  INSERT INTO `property_infos` (`property_id`, `source`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (2, 'https://twitter.com', 'dispute', '{\"type\":\"government\"}', 'Oil land', '2015-04-25 13:09:23.394677', '2015-04-25 13:09:23.394677')
+  [1m[36m (4.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  BEGIN
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO `property_infos` (`property_id`, `source`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (2, 'https://twitter.com', 'infra', '{\"type\":\"Hospital\",\"date_delta\":\"2 years\"}', 'Close to city', '2015-04-25 13:09:23.419274', '2015-04-25 13:09:23.419274')[0m
+  [1m[35m (2.5ms)[0m  COMMIT
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO `property_infos` (`property_id`, `source`, `name`, `details`, `comments`, `created_at`, `updated_at`) VALUES (2, 'https://twitter.com', 'nature', '{\"type\":\"water_table\",\"value\":\"low\"}', 'Water level high or low', '2015-04-25 13:09:23.425760', '2015-04-25 13:09:23.425760')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150425125317')[0m
+  [1m[35m (2.8ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'attribute_histories'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `attribute_histories`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'properties'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `properties`[0m
+  [1m[35m (0.5ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'property_detail_histories'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `property_detail_histories`[0m
+  [1m[35m (0.6ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'property_details'
+
+  [1m[36m (0.5ms)[0m  [1mSHOW CREATE TABLE `property_details`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'property_infos'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `property_infos`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'taggings'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `taggings`[0m
+  [1m[35m (1.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'tags'
+
+  [1m[36m (1.1ms)[0m  [1mSHOW CREATE TABLE `tags`[0m
+  [1m[35m (0.6ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'looknow_development'
+  AND fk.table_name = 'users'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `users`[0m
