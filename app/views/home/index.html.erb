@@ -9,8 +9,11 @@
 		  </div>
 		</div>
     </div>
-    <div class="col-md-4">
-      Tweet
+    <div class="col-md-4" style="min-height: 500px; border: 1px solid">
+      <p>Tweet</p>
+      <div id="tweets">
+        <%= render partial: '/property_infos/property_info', collection: @property_infos %>
+      </div>
     </div>
   </div>
   <div class="clear"></div>
@@ -21,13 +24,14 @@
       <%= form_tag property_infos_path, method: :post, remote: true do %>
         <%= select_tag :name, options_for_select([['Price', 'price'], ['Dispute', 'dispute'], ['Infra', 'infra'], ['Nature', 'nature']]),  class: "info_name"%>
 
-          <%= text_field_tag :new_price, nil, :placeholder => 'new price', class: "info_name_price_options" %>
-          <%= text_field_tag :price_change_reason, nil, :placeholder => 'Reason' , class: "info_name_price_options" %>
+          <%= text_field_tag 'price_value[new_price]', nil, :placeholder => 'new price', class: "info_name_price_options", id: "new_price" %>
+          <%= text_field_tag 'price_value[price_change_reason]', nil, :placeholder => 'Reason' , class: "info_name_price_options", id: "price_change_reason" %>
 
-          <%= select_tag :new_infra, options_for_select(['school', 'hospital', 'highway', 'tech_park']), class: "info_name_infra_options", style: "display: none"  %>
-          <%= text_field_tag :new_date, nil, :placeholder => 'By When', class: "info_name_infra_options", style: "display: none" %>
+          <%= select_tag 'infra_value[new_infra]', options_for_select(['school', 'hospital', 'highway', 'tech_park']), class: "info_name_infra_options", style: "display: none", id: "new_infra"  %>
+          <%= text_field_tag 'infra_value[new_date]', nil, :placeholder => 'By When', class: "info_name_infra_options", style: "display: none", id: "new_date" %>
 
-          <%= text_area_tag :comments, nil, :placeholder => 'Tweet !!!' %>
+          <%= text_area_tag :comments, nil, :placeholder => 'Tweet !!!', id: "tweet" %>
+          <%= submit_tag :submit, id: "submit" %>
       <%end%>
     </div>
   </div>
@@ -53,16 +57,51 @@
 </script>
 
 <script>
-    $('.info_name').change(function(){
-        if ($(this).val() == 'price'){
-            $('.info_name_price_options').show()
-            $('.info_name_infra_options').hide()
-        }
-        else if ($(this).val() == 'infra'){
-            $('.info_name_price_options').hide()
-            $('.info_name_infra_options').show()
-        }
+  $('.info_name').change(function(){
+    var tweet = ""; 
+    if ($(this).val() == 'price') {
+      $("#tweet").val('');
+      $('.info_name_price_options').val('');
+      $('.info_name_price_options').show();
+      $('.info_name_infra_options').hide();
+      $('#new_price').focus();
+    } else if ($(this).val() == 'infra') {
+      $("#tweet").val('');
+      $('.info_name_infra_options').val('');
+      $('.info_name_infra_options').show();
+      $('.info_name_price_options').hide();
+      $('#new_infra').focus();
+      $("#new_infra, #new_date").change(function(){
+        generate_tweet('infra');
+      });
+    }
+  });
 
-    })
+  function initialize_event_for_price(){
+    $("#new_price, #price_change_reason").keyup(function(){
+      generate_tweet('price');
+    });
+  }
+  function initialize_event_for_infra(){
+    $("#new_infra, #new_date").keyup(function(){
+      generate_tweet('infra');
+    });
+  }
+
+  function generate_tweet(info_name){
+    var tweet = ""; 
+    if(info_name == "price"){
+      if($('#new_price').val() != "")
+      tweet += "New price is " + $('#new_price').val();
+      if($('#price_change_reason').val() != "")
+      tweet += " because of " + $('#price_change_reason').val();
+    }else if(info_name == "infra"){
+      tweet += "New " + $('#new_infra').val() + " is comming around " + $('#new_date').val();
+    }
+    $("#tweet").val(tweet);
+  }
+  initialize_event_for_price();
+  initialize_event_for_infra();
+  generate_tweet($('.info_name') == "price");
 </script>
 	
