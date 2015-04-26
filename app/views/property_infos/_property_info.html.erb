@@ -1,5 +1,5 @@
 <div class="property_info-<%= property_info[:id] %>">
-  <div class="botton_margin col-md-12 tweet-div pull-padding <% if property_info[:related_to_property] %> related_to_property <% end %>" <% if property_info[:rating] < 2 %> style="background-color: #f5f5f5;color:#333"<% else %>style="background-color: rgb(254, 254, 254); opacity: 0.55;" <% end %>>
+  <div class="botton_margin col-md-12 tweet-div pull-padding <% unless property_info[:related_to_property] %> related_to_property <% end %>" <% if property_info[:rating] < 2 %> style="background-color: #f5f5f5;color:#333"<% else %>style="background-color: rgb(254, 254, 254); opacity: 0.55;" <% end %>>
 	  <div class="col-md-2">
 	  	<img src="<%= property_info[:user].profile_image_url_https %>">
 	  </div>
