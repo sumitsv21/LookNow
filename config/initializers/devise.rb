@@ -97,8 +97,8 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   require "omniauth-twitter"
-  #config.omniauth :twitter, 'slmLB86di1vEn5zl2bbMt4BiG', 'hdKSRVrcguXVkaUbnKC0nlh0QKvaTv21RUdcgsC5d6quvwYBOo', {:image_size => 'original'}
-  config.omniauth :twitter, 'EgnavLeK4rkzrsQBGecraUPI1', 'NTHYMqZHCQsgo8FxBChK7B8RwpcwKKAJsQztnEILHcKgbNIFf2', {:image_size => 'original'}
+  config.omniauth :twitter, 'slmLB86di1vEn5zl2bbMt4BiG', 'hdKSRVrcguXVkaUbnKC0nlh0QKvaTv21RUdcgsC5d6quvwYBOo', {:image_size => 'original'}
+  #config.omniauth :twitter, 'EgnavLeK4rkzrsQBGecraUPI1', 'NTHYMqZHCQsgo8FxBChK7B8RwpcwKKAJsQztnEILHcKgbNIFf2', {:image_size => 'original'}
   OmniAuth.config.on_failure = Proc.new { |env|
     OmniAuth::FailureEndpoint.new(env).redirect_to_failure
   }
