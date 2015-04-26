@@ -158,7 +158,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
       if($('#price_change_reason').val() != "")
       tweet += ". " + $('#price_change_reason').val();
     }else if(info_name == "infra"){
-      tweet += "New " + $('#new_infra').val() + " is comming around " + $('#new_date').val();
+      tweet += "New " + $('#new_infra').val() + " is coming around " + $('#new_date').val() + "#housing #christcollege"
     }
     $("#tweet").val(tweet);
   }
@@ -175,7 +175,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         success: get_feed(),
         type: 'JS'
       });
-    }, 15000);
+    }, 115000);
   }
 
   initialize_event_for_price();
