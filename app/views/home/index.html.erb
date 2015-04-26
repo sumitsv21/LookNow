@@ -13,7 +13,7 @@
 }
 .real-time{
 	border-bottom: 1px solid #DDDDDD;
-	font-size: 20px;
+	font-size: 15px;
 	padding: 5px 0;
 }
 </style>
@@ -44,7 +44,7 @@
 		  <div id="map" style='width: 840px; height: 540px;'></div>
 	  </div>
     <div class="col-md-4" style="max-height: 540px;overflow-y:auto;">
-      <p class="text-center bold real-time">Real Time Feed</p>
+      <p class="text-center bold real-time">Real Time Land Activity</p>
       <div id="tweets">
         <%= render partial: '/property_infos/property_info', collection: @property_infos %>
       </div>
@@ -125,7 +125,7 @@ function initialize() {
         strokeColor: '#E9E5DC',
         strokeOpacity: 0.8,
         strokeWeight: 1,
-        fillColor: '#3276B1',
+        fillColor: '#3CDC46',
         fillOpacity: 0.5
     });
     poly.setMap(map);
@@ -223,7 +223,7 @@ function push_the_tweet(tweet){
         success: get_feed(),
         type: 'JS'
       });
-    }, 15000);
+    }, 12000);
   }
 
   initialize_event_for_price();
