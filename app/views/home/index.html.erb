@@ -73,8 +73,10 @@
      handler.getMap().setZoom(18);
   });
 */
- MarkerData = [12.93533315169078, 77.60511558261397, "Elsie Roy Elementary"];
+ MarkerData = [12.93533315169078, 77.60511558261397, "Hello! Welcome to the visual of the land"];
+ MarkerData1 = [12.934079600463006,77.60816752910000, "Hello! Welcome to the visual of the land"];
  PathData = <%= @polygon %>;
+ PathData1 = <%= @polygon1 %>;
 function initialize() {
      map = 
         new google.maps.Map(document.getElementById('map'));
@@ -91,6 +93,22 @@ function initialize() {
         infowindow.setContent(this.title);
         infowindow.open(map, this);
     });
+
+    map1 = 
+        new google.maps.Map(document.getElementById('map'));
+     infowindow = new google.maps.InfoWindow();
+     center = 
+        new google.maps.LatLng(MarkerData1[0], MarkerData1[1]);
+     marker = new google.maps.Marker({
+        position: center,
+        map: map,
+        title: MarkerData1[2]
+    });
+ 
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent(this.title);
+        infowindow.open(map1, this);
+    });
  
     var path = [];
     var bounds = new google.maps.LatLngBounds();
@@ -104,15 +122,36 @@ function initialize() {
     }
     var poly = new google.maps.Polygon({
         paths: path,
-        strokeColor: '#FF0000',
+        strokeColor: '#E9E5DC',
         strokeOpacity: 0.8,
         strokeWeight: 1,
         fillColor: '#3276B1',
         fillOpacity: 0.5
     });
     poly.setMap(map);
+
+    var path1 = [];
+    var bounds1 = new google.maps.LatLngBounds();
+    bounds1.extend(center);
+    for (var i in PathData1)
+    {
+        var p = PathData1[i];
+        var latlng = new google.maps.LatLng(p[0], p[1]);
+        path.push(latlng);
+        bounds1.extend(latlng);
+    }
+    var poly1 = new google.maps.Polygon({
+        paths: path,
+        strokeColor: '#E9E5DC',
+        strokeOpacity: 0.8,
+        strokeWeight: 1,
+        fillColor: '#3CDC46',
+        fillOpacity: 0.5
+    });
+    poly1.setMap(map);
     
     map.fitBounds(bounds);
+    map.fitBounds(bounds1);
 }
  
 google.maps.event.addDomListener(window, 'load', initialize);
