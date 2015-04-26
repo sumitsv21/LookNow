@@ -14,12 +14,15 @@ module HomeHelper
   def get_live_tweets_for_property(topics = ['housing', 'bangalore'], opts = {result_type: "recent"}, property_id=1)
     property_tags = Property.find_by_id(property_id).tag_list
     tweets = TWITTER_CLIENT.search(topics.join(" "), opts).take(20).map{ |tweet| {:user => tweet.user, :followers_count => tweet.user.followers_count, :favorite_count => tweet.favorite_count, :retweet_count => tweet.retweet_count, :id => tweet.id, :text => tweet.text}}
-    tweets_with_rating = tweets.map { |tweet|
-      rating = calculate_tweet_rating(tweet)
-      tweet.merge!({:rating => rating})
+    tweets_with_rating = []
+    tweets.each { |tweet|
       if (property_tags.any? { |word| tweet.include?(word) })
         tweet.merge!({:related_to_property => true})
+      else
+        tweet.merge!({:related_to_property => false})
       end
+      rating = calculate_tweet_rating(tweet)
+      tweets_with_rating << tweet.merge!({:rating => rating})
     }
     tweets_with_rating
   end
@@ -50,7 +53,7 @@ module HomeHelper
     else
       rating += (favorite_count*6)/5
     end
-    rating += user.rating
+    rating += 4
     (rating/4).to_i
   end
 
