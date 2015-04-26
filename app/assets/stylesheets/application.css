@@ -15,3 +15,7 @@
  *= require bootstrap.min
  *= require home
  */
+
+.related_to_property{
+border-bottom: yellow 2px solid;
+}
