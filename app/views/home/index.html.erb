@@ -46,7 +46,7 @@
     <div class="col-md-4" style="max-height: 540px;overflow-y:auto;">
       <p class="text-center bold real-time">Real Time Feed</p>
       <div id="tweets">
-        <%= render partial: '/property_infos/tweet', collection: @property_infos %>
+        <%= render partial: '/property_infos/property_info', collection: @property_infos %>
       </div>
     </div>
   </div>
@@ -163,14 +163,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
     $("#tweet").val(tweet);
   }
 
-  function push_the_tweet(tweet){
-    $('div#tweets').prepend('<div class="property_info-' + tweet.id + '">' +
+function push_the_tweet(tweet){
+    $('div#tweets').prepend('<div class="property_info-' + tweet["id"] + '">' +
 	'<div class="col-md-12 tweet-div pull-padding">' +
 	  '<div class="col-md-2">' +
-	  	'<img src="' + tweet.user.profile_image_url_https + '">' +
+	  	'<img src="' + tweet["user"]["profile_image_url_https"] + '">' +
 	  '</div>' +
 	  '<div class="col-md-10 tweet-text">' +
-	  	' + tweet.text + ' +
+	  	 + escape(tweet["text"]) +
 	  '</div>' +
 	'</div>' +
 '</div>');
@@ -184,7 +184,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         success: get_feed(),
         type: 'JS'
       });
-    }, 115000);
+    }, 15000);
   }
 
   initialize_event_for_price();
