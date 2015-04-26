@@ -7,7 +7,7 @@ module HomeHelper
     TWITTER_CLIENT.update(str)
   end
 
-  def get_live_tweets(search_params = ['housing', 'land', 'plot', 'bangalore'], opts = {result_type: "recent"})
+  def get_live_tweets(topics = ['housing', 'land', 'plot', 'bangalore'], opts = {result_type: "recent"})
     TWITTER_CLIENT.search(search_params, opts).map{ |tweet| {:user => tweet.user, :followers_count => tweet.user.followers_count, :favorite_count => tweet.favorite_count, :retweet_count => tweet.retweet_count, :id => tweet.id, :text => tweet.text}}
   end
 end
