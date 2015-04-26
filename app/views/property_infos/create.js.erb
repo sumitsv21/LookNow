@@ -1,2 +1,2 @@
-$('div#tweets').append('<%= escape_javascript(render partial: 'property_info', locals: {property_info: @property_info})%>');
+$("#tweets").html('<%= escape_javascript(render partial: '/property_infos/property_info', collection: @property_infos)%>');
 $('#new_price, #price_change_reason, #new_infra, #new_date, #tweet').val('');

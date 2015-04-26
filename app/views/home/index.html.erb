@@ -202,8 +202,17 @@ google.maps.event.addDomListener(window, 'load', initialize);
     $("#tweet").val(tweet);
   }
 
-  function push_the_tweet(tweet){
-    $('div#tweets').append(tweet);
+function push_the_tweet(tweet){
+    $('div#tweets').prepend('<div class="property_info-' + tweet["id"] + '">' +
+	'<div class="col-md-12 tweet-div pull-padding">' +
+	  '<div class="col-md-2">' +
+	  	'<img src="' + tweet["user"]["profile_image_url_https"] + '">' +
+	  '</div>' +
+	  '<div class="col-md-10 tweet-text">' +
+	  	 + escape(tweet["text"]) +
+	  '</div>' +
+	'</div>' +
+'</div>');
   }
 
   function get_feed(){
@@ -214,7 +223,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
         success: get_feed(),
         type: 'JS'
       });
-    }, 115000);
+    }, 15000);
   }
 
   initialize_event_for_price();

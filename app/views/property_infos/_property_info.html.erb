@@ -1,10 +1,10 @@
 <div class="property_info-<%= property_info[:id] %>">
-	<div class="col-md-12 tweet-div pull-padding">
+  <div class="col-md-12 tweet-div pull-padding" <% if property_info[:rating] < 2 %> style="background-color: red;"<% else %>style="background-color: green;" <% end %>>
 	  <div class="col-md-2">
 	  	<img src="<%= property_info[:user].profile_image_url_https %>">
 	  </div>
-	  <div class="col-md-10 tweet-text">
+	  <div class="col-md-9 tweet-text">
 	  	<%= property_info[:text] %>
-	  </div>
+    </div>
 	</div>
 </div>

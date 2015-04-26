@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20150425155517) do
     t.string   "details",     limit: 255
     t.string   "source",      limit: 255
     t.text     "comments",    limit: 65535
+    t.integer  "rating",      limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
