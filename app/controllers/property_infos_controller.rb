@@ -17,7 +17,7 @@ class PropertyInfosController < ApplicationController
   end
 
   def get_feed
-    @property_infos = get_live_tweets
+    @property_infos = get_live_tweets_for_property
     render 'get_feed.js'
   end
 
