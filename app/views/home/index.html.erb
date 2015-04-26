@@ -197,9 +197,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
       if($('#price_change_reason').val() != "")
       tweet += ". " + $('#price_change_reason').val();
     }else if(info_name == "infra"){
-      tweet += "New " + $('#new_infra').val() + " is coming around " + $('#new_date').val() + "#housing #christcollege"
+      tweet += "New " + $('#new_infra').val() + " is coming around " + $('#new_date').val();
     }
-    $("#tweet").val(tweet);
+    $("#tweet").val(tweet + "#housing #bangalore");
   }
 
 function push_the_tweet(tweet){
